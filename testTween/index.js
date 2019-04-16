@@ -31,15 +31,34 @@
   var Linear = function(t, b, c, d) { 
     return c * t / d + b; 
   }
-  // console.log(requestAnimationFrame);
-  //动画函数存在的问题：名字还没改。。。。应该复制一份粒子数组，而不是直接修改，这样才能多次移动。
-  Math.easeInOutExpo = function(t,b,c,d){
-    t /= d/2;
-    if(t<1){
-      return c/2 * Math.pow(2,10*(t-1)) + b;
+
+  var Sine = {
+      easeIn: function(t, b, c, d) {
+          return -c * Math.cos(t/d * (Math.PI/2)) + c + b;
+      },
+      easeOut: function(t, b, c, d) {
+          return c * Math.sin(t/d * (Math.PI/2)) + b;
+      },
+      easeInOut: function(t, b, c, d) {
+          return -c / 2 * (Math.cos(Math.PI * t/d) - 1) + b;
+      }
+  }
+
+  var Expo = {
+    easeIn: function(t, b, c, d) {
+        return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
+    },
+    easeOut: function(t, b, c, d) {
+        return (t==d) ? b + c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+    },
+    easeInOut: function(t, b, c, d) {
+        if (t==0) return b;
+        if (t==d) return b+c;
+        if ((t /= d / 2) < 1) return c / 2 * Math.pow(2, 10 * (t - 1)) + b;
+        return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;
     }
-    return c/2 * (-Math.pow(2, -10*t) + 2) + b;
-  };
+  }
+
   //全局变量
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
@@ -159,7 +178,8 @@
   var t = 0;//当前时间
   var d = 80;//持续时间
   var timer;
-  function particle_animate(oldParticles,offset_x,offset_y){
+  //animate动画函数
+  function particle_animate(oldParticles,offset_x,offset_y,animate){
 
     // for(let i = 0; i < oldParticles.length; i ++){
     //   var n = 100 + Math.random()*500;
@@ -185,8 +205,8 @@
       }
 
       if(t>=oldParticles[i].delay){
-        var x = Linear(t-oldParticles[i].delay,oldParticles[i].x,offset_x[i],d-oldParticles[i].delay);
-        var y = Linear(t-oldParticles[i].delay,oldParticles[i].y,offset_y[i],d-oldParticles[i].delay);
+        var x = animate(t-oldParticles[i].delay,oldParticles[i].x,offset_x[i],d-oldParticles[i].delay);
+        var y = animate(t-oldParticles[i].delay,oldParticles[i].y,offset_y[i],d-oldParticles[i].delay);
    
         // oldParticles[i].setXY(x,y);
         oldParticles[i].drawTarget(x,y);
@@ -213,7 +233,7 @@
 
     t ++;
     timer = requestAnimationFrame(function(){
-     particle_animate(oldParticles,offset_x,offset_y);
+     particle_animate(oldParticles,offset_x,offset_y,animate);
     })
   }
 
@@ -239,7 +259,7 @@
     var new_y = new_y || H/5*2;
     var color = color || "#ffffff";
     var text = text || "你好";
-
+    var animate;
     //中间变量和存储变量
     var particles = [];
     var oldParticles = [];//存放粒子实例
@@ -279,9 +299,10 @@
       offset_x[i] = newParticles[i].x - oldParticles[i].current_x;
       offset_y[i] = newParticles[i].y - oldParticles[i].current_y;
     }
+    animate = Sine.easeOut;
     timer = requestAnimationFrame(function(){
       console.time('begin');
-      particle_animate(oldParticles,offset_x,offset_y);
+      particle_animate(oldParticles,offset_x,offset_y,animate);
     });
 
     //开启第二段动画
@@ -303,9 +324,10 @@
         // particle.setXY(x,y);
         // sideParticles.push(particle);
       }
+      animate = Linear;
       timer = requestAnimationFrame(function(){
         console.time('two');
-        particle_animate(oldParticles,offset_x,offset_y);
+        particle_animate(oldParticles,offset_x,offset_y,animate);
       })  
     },3000);
 
@@ -330,8 +352,8 @@
         if(i>= oldParticles.length){
           var particle = new Particle();
           particle.setColor(color);
-          var x = Math.random()*W;
-          var y = Math.random()*H;
+          var x = W/2+(Math.random()-0.5)*W/5;
+          var y = H/2+(Math.random()-0.5)*H/5;
           particle.setXY(x,y);
           particle.current_x = x;
           particle.current_y = y;
@@ -352,9 +374,10 @@
       
 
       console.log(oldParticles.length);
+      animate = Sine.easeOut;
       timer = requestAnimationFrame(function(){
         console.time('two');
-        particle_animate(oldParticles,offset_x,offset_y);
+        particle_animate(oldParticles,offset_x,offset_y,animate);
       })  
     },4500);
   
