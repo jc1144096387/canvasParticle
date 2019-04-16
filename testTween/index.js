@@ -92,6 +92,7 @@
 
   //获取图案数据
   function getPaticleData(text){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     var data = [];
     ctx.font = "100px Microsoft Yahei";
     ctx.textAlign = "center";
@@ -109,8 +110,10 @@
   //
 
   function Particle(){
-      this.x = 0;//x轴坐标
-      this.y = 0;//y轴坐标
+      this.x = 0;//初始x轴坐标
+      this.y = 0;//初始y轴坐标
+      this.current_x = 0;//粒子当前的x轴坐标
+      this.current_y = 0;//粒子当前的y轴坐标
       this.color = 0;//颜色
       this.width = 2;//粒子宽度
       this.height = 2;//粒子高度
@@ -154,9 +157,9 @@
 
   //粒子动画
   var t = 0;//当前时间
-  var d = 100;//持续时间
+  var d = 80;//持续时间
   var timer;
-  function particle_animate(oldParticles,offset_x,offset_y,speed){
+  function particle_animate(oldParticles,offset_x,offset_y){
 
     // for(let i = 0; i < oldParticles.length; i ++){
     //   var n = 100 + Math.random()*500;
@@ -176,29 +179,41 @@
         
       //   continue;
       // }
+
+      if(t == 0){
+        oldParticles[i].setXY(oldParticles[i].current_x,oldParticles[i].current_y);
+      }
+
       if(t>=oldParticles[i].delay){
         var x = Linear(t-oldParticles[i].delay,oldParticles[i].x,offset_x[i],d-oldParticles[i].delay);
         var y = Linear(t-oldParticles[i].delay,oldParticles[i].y,offset_y[i],d-oldParticles[i].delay);
    
         // oldParticles[i].setXY(x,y);
         oldParticles[i].drawTarget(x,y);
+        oldParticles[i].current_x = x;
+        oldParticles[i].current_y = y;
       }
-      if(t == d){
-        //动画结束时，修改粒子的坐标为结束坐标
-        oldParticles[i].setXY(x,y);
-      }
+      
+      // if(t == d){
+      //   //动画结束时，修改粒子的坐标为结束坐标
+      //   oldParticles[i].setXY(x,y);
+      // }  
     }
+  
     
     if(t == d){
       console.timeEnd('begin');
+      console.timeEnd('two');
       cancelAnimationFrame(timer);
-      console.log(timer);
+     
+     
+
       return;
     }
-    speed = Math.pow((speed+0.1),1);
+
     t ++;
     timer = requestAnimationFrame(function(){
-     particle_animate(oldParticles,offset_x,offset_y,speed);
+     particle_animate(oldParticles,offset_x,offset_y);
     })
   }
 
@@ -207,7 +222,7 @@
       window.setTimeout(i, 1000 / 45)
   };//各个浏览器支持的requestAnimationFrame有所不同，兼容各个浏览器
 
-  window.onload = function(){
+  // window.onload = function(){
     // initCanvas(txt);
     // calculate();
     // draw(particles);
@@ -253,40 +268,98 @@
       let particle = new Particle();
       particle.setColor(color);
       particle.setXY(old_x,old_y);
+      particle.current_x = old_x;
+      particle.current_y = old_y;
       particle.setWH(2,2);
       // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
   
       particle.delay = Math.random()*60;
       // particle.draw();
       oldParticles.push(particle);
-      offset_x[i] = newParticles[i].x - oldParticles[i].x;
-      offset_y[i] = newParticles[i].y - oldParticles[i].y;
+      offset_x[i] = newParticles[i].x - oldParticles[i].current_x;
+      offset_y[i] = newParticles[i].y - oldParticles[i].current_y;
     }
     timer = requestAnimationFrame(function(){
       console.time('begin');
-      particle_animate(oldParticles,offset_x,offset_y,1.5);
+      particle_animate(oldParticles,offset_x,offset_y);
     });
 
+    //开启第二段动画
+    setTimeout(function(){
+      t = 0;
+      for(let i = 0; i < oldParticles.length; i ++){
+        let particle = new Particle();
+        particle.setColor("#ffffff");
+        particle.setWH(2,2);
+        //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
+        //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
+        // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
+        // var y = H/10*1+Math.random()*W/10*8;
+        var x = Math.random()*W;
+        var y = Math.random()*H;
+        offset_x[i] = x - oldParticles[i].current_x;
+        offset_y[i] = y - oldParticles[i].current_y;
+        // var y = Math.random()*H;
+        // particle.setXY(x,y);
+        // sideParticles.push(particle);
+      }
+      timer = requestAnimationFrame(function(){
+        console.time('two');
+        particle_animate(oldParticles,offset_x,offset_y);
+      })  
+    },3000);
+
+    //开启第三段动画
+    setTimeout(function(){
+      t = 0;
+      data = getPaticleData("世界");
+      newParticles = [];
+      newParticles = calculate(data,new_x,new_y);
+      for(let i = 0; i < newParticles.length; i ++){
+        // particle.setColor(color);
+        // particle.setXY(old_x,old_y);
+        // particle.setWH(2,2);
+        // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
+        
+        // particle.delay = Math.random()*60;
+        // particle.draw();
+        // oldParticles.push(particle);
+        
+        //文字改变之后，粒子数量改变
+        //如果不存在就产生随机坐标的粒子
+        if(i>= oldParticles.length){
+          var particle = new Particle();
+          particle.setColor(color);
+          var x = Math.random()*W;
+          var y = Math.random()*H;
+          particle.setXY(x,y);
+          particle.current_x = x;
+          particle.current_y = y;
+          particle.setWH(2,2);
+          // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
+      
+          particle.delay = Math.random()*60;
+          oldParticles[i] = particle;
+        }
 
 
-    // var sideParticles = [];
-    // for(let i = 0; i < oldParticles.length; i ++){
-    //   let particle = new Particle();
-    //   particle.setColor("#ffffff");
-    //   particle.setWH(2,2);
-    //   //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
-    //   //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
-    //   // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
-    //   // var y = H/10*1+Math.random()*W/10*8;
-    //   var x = Math.random()*W;
-    //   var y = H/10+Math.random()*H/10*2;
-    //   offset_x[i] = x - oldParticles[i].x;
-    //   offset_y[i] = y - oldParticles[i].y;
-    //   // var y = Math.random()*H;
-    //   // particle.setXY(x,y);
-    //   // sideParticles.push(particle);
-    // }
+        offset_x[i] = newParticles[i].x - oldParticles[i].current_x;
+        offset_y[i] = newParticles[i].y - oldParticles[i].current_y;
 
+        newParticles[i].drawSelf();
+      }
+
+      
+
+      console.log(oldParticles.length);
+      timer = requestAnimationFrame(function(){
+        console.time('two');
+        particle_animate(oldParticles,offset_x,offset_y);
+      })  
+    },4500);
+  
+
+    
 
   //   var objDeepCopy = function (source) {
   //     var sourceCopy = source instanceof Array ? [] : {};
@@ -318,16 +391,8 @@
   //     // console.log(newParticles[i].x);
   //   }
   //   console.log(oldParticles.length,newParticles.length,sideParticles.length);
-  }
+  // }
 
-  function main(){
-      init(text.value);
-      calculate();
-      getRandomParticles();
-      // draw(randomParticles);
-      // draw(particles);
-      move(randomParticles,particles);
-  }
 
   
 
