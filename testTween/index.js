@@ -176,7 +176,7 @@
 
   //粒子动画
   var t = 0;//当前时间
-  var d = 80;//持续时间
+  var d = 100;//持续时间
   var timer;
   //animate动画函数
   function particle_animate(oldParticles,offset_x,offset_y,animate){
@@ -293,13 +293,13 @@
       particle.setWH(2,2);
       // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
   
-      particle.delay = Math.random()*60;
+      particle.delay = Math.random()*50;
       // particle.draw();
       oldParticles.push(particle);
       offset_x[i] = newParticles[i].x - oldParticles[i].current_x;
       offset_y[i] = newParticles[i].y - oldParticles[i].current_y;
     }
-    animate = Sine.easeOut;
+    animate = Expo.easeOut;
     timer = requestAnimationFrame(function(){
       console.time('begin');
       particle_animate(oldParticles,offset_x,offset_y,animate);
@@ -374,15 +374,165 @@
       
 
       console.log(oldParticles.length);
-      animate = Sine.easeOut;
+      animate = Expo.easeOut;
       timer = requestAnimationFrame(function(){
         console.time('two');
         particle_animate(oldParticles,offset_x,offset_y,animate);
       })  
-    },4500);
+    },3500);
   
 
-    
+    //开启第二段动画
+    setTimeout(function(){
+      t = 0;
+      for(let i = 0; i < oldParticles.length; i ++){
+        let particle = new Particle();
+        particle.setColor("#ffffff");
+        particle.setWH(2,2);
+        //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
+        //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
+        // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
+        // var y = H/10*1+Math.random()*W/10*8;
+        var x = Math.random()*W;
+        var y = Math.random()*H;
+        offset_x[i] = x - oldParticles[i].current_x;
+        offset_y[i] = y - oldParticles[i].current_y;
+        // var y = Math.random()*H;
+        // particle.setXY(x,y);
+        // sideParticles.push(particle);
+      }
+      animate = Linear;
+      timer = requestAnimationFrame(function(){
+        console.time('two');
+        particle_animate(oldParticles,offset_x,offset_y,animate);
+      })  
+    },5000);
+
+    //开启第三段动画
+    setTimeout(function(){
+      t = 0;
+      data = getPaticleData("hello world");
+      newParticles = [];
+      newParticles = calculate(data,new_x,new_y);
+      for(let i = 0; i < newParticles.length; i ++){
+        // particle.setColor(color);
+        // particle.setXY(old_x,old_y);
+        // particle.setWH(2,2);
+        // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
+        
+        // particle.delay = Math.random()*60;
+        // particle.draw();
+        // oldParticles.push(particle);
+        
+        //文字改变之后，粒子数量改变
+        //如果不存在就产生随机坐标的粒子
+        if(i>= oldParticles.length){
+          var particle = new Particle();
+          particle.setColor(color);
+          var x = W/2+(Math.random()-0.5)*W/5;
+          var y = H/2+(Math.random()-0.5)*H/5;
+          particle.setXY(x,y);
+          particle.current_x = x;
+          particle.current_y = y;
+          particle.setWH(2,2);
+          // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
+      
+          particle.delay = Math.random()*60;
+          oldParticles[i] = particle;
+        }
+
+
+        offset_x[i] = newParticles[i].x - oldParticles[i].current_x;
+        offset_y[i] = newParticles[i].y - oldParticles[i].current_y;
+
+        newParticles[i].drawSelf();
+      }
+
+      
+
+      console.log(oldParticles.length);
+      animate = Expo.easeOut;
+      timer = requestAnimationFrame(function(){
+        console.time('two');
+        particle_animate(oldParticles,offset_x,offset_y,animate);
+      })  
+    },5500);
+
+    //开启第二段动画
+    setTimeout(function(){
+      t = 0;
+      for(let i = 0; i < oldParticles.length; i ++){
+        let particle = new Particle();
+        particle.setColor("#ffffff");
+        particle.setWH(2,2);
+        //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
+        //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
+        // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
+        // var y = H/10*1+Math.random()*W/10*8;
+        var x = Math.random()*W;
+        var y = Math.random()*H;
+        offset_x[i] = x - oldParticles[i].current_x;
+        offset_y[i] = y - oldParticles[i].current_y;
+        // var y = Math.random()*H;
+        // particle.setXY(x,y);
+        // sideParticles.push(particle);
+      }
+      animate = Linear;
+      timer = requestAnimationFrame(function(){
+        console.time('two');
+        particle_animate(oldParticles,offset_x,offset_y,animate);
+      })  
+    },7000);
+
+    //开启第三段动画
+    setTimeout(function(){
+      t = 0;
+      data = getPaticleData("就这样吧= =");
+      newParticles = [];
+      newParticles = calculate(data,new_x,new_y);
+      for(let i = 0; i < newParticles.length; i ++){
+        // particle.setColor(color);
+        // particle.setXY(old_x,old_y);
+        // particle.setWH(2,2);
+        // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
+        
+        // particle.delay = Math.random()*60;
+        // particle.draw();
+        // oldParticles.push(particle);
+        
+        //文字改变之后，粒子数量改变
+        //如果不存在就产生随机坐标的粒子
+        if(i>= oldParticles.length){
+          var particle = new Particle();
+          particle.setColor(color);
+          var x = W/2+(Math.random()-0.5)*W/5;
+          var y = H/2+(Math.random()-0.5)*H/5;
+          particle.setXY(x,y);
+          particle.current_x = x;
+          particle.current_y = y;
+          particle.setWH(2,2);
+          // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
+      
+          particle.delay = Math.random()*60;
+          oldParticles[i] = particle;
+        }
+
+
+        offset_x[i] = newParticles[i].x - oldParticles[i].current_x;
+        offset_y[i] = newParticles[i].y - oldParticles[i].current_y;
+
+        newParticles[i].drawSelf();
+      }
+
+      
+
+      console.log(oldParticles.length);
+      animate = Expo.easeOut;
+      timer = requestAnimationFrame(function(){
+        console.time('two');
+        particle_animate(oldParticles,offset_x,offset_y,animate);
+      })  
+    },7500);
 
   //   var objDeepCopy = function (source) {
   //     var sourceCopy = source instanceof Array ? [] : {};
