@@ -701,10 +701,11 @@
       if(this.y > H){
         this.isDead = true;
       }
-      if(n%1000 == 0){
+      // console.log(n);
+      if(n%25 + Math.floor(Math.random()*2) == 0){
+        console.log(n);
         offset_x = (Math.random()-0.5) * 4;
       }
-      console.log(offset_x);
       this.y += 2 + Math.random()*1;
       this.x += offset_x;
       
@@ -722,10 +723,9 @@
       imgs.push(createImg(imageUrls[index],W*20/100 + (Math.random()-0.5) * W*20/100, 0));
       index = Math.floor(Math.random()*imageUrls.length);
       imgs.push(createImg(imageUrls[index],W*75/100 + (Math.random()-0.5) * W*20/100, 0));
-      n = 1000;
+      n = 100;
     }
     
-    console.log(imgs);
     for(let i = 0; i < imgs.length; i ++){
       if(imgs[i].isDead){
         imgs.splice(i,1);
@@ -746,7 +746,6 @@
     let k = image.width/image.height;
     image.width = 50;
     image.height = image.width/k;
-    console.log(image.width,image.height)
 
 
     let img = new Img(image,W/2,H/2);
