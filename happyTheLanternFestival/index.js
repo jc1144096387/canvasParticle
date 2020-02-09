@@ -119,7 +119,7 @@
   function getPaticleData(text){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     var data = [];
-    ctx.font = "100px Microsoft Yahei";
+    ctx.font = "60px Microsoft Yahei";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     //绘制模板图案
