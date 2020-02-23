@@ -28,7 +28,7 @@
   }
 
   let PI = Math.PI;
-  let T = 100;//绘制间隔参数
+  let T = 120;//绘制间隔参数
   // 绘制心形线
   // 参数说明：a为大小,a越大,绘制出的心形越大; precision为绘制精度,precision越大,绘制次数越多,绘制出的心形越精确;
   function drawHeart(a,precision){
@@ -42,7 +42,7 @@
     let y = -5*a;
     ctx.moveTo(x,y);
     for(let t = (2*PI/precision); t <= 2*PI; t += (2*PI/precision) ){
-      setTimeout(function(){
+      // setTimeout(function(){
         console.log(a);
         // x = a*(2*Math.sin(t)+Math.sin(2*t));
         // y = a*(2*Math.cos(t)+Math.cos(2*t));
@@ -55,8 +55,8 @@
         y = -a * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
         
         ctx.lineTo(x,y);
-        ctx.stroke();
-      },t*T)
+        ctx.fill();
+      // },t*T)
     }
 
 
@@ -88,9 +88,78 @@
       ctx.strokeStyle = i%2 == 0 ? "rgba(231,77,60,1)":"rgba(231,77,60,0.1)"; 
       ctx.globalAlpha = i%2 == 0 ? "1":"0.1";
       ctx.lineWidth = i%2 == 0 ? '5': '1'
-      drawHeart(15/HeartNum*(HeartNum-i),400);
+      drawHeart(10/HeartNum*(HeartNum-i),300);
       ctx.closePath();
-    },i*3.5*PI*T);
+    },1000+i*3.5*PI*T);
   }
+
+
+//   let stars = []
+// // let ctx = document.querySelector('#cvs').getContext('2d')
+
+// class Star{
+//   constructor(x, y, vx, vy, r = 4){
+//     this.x = x || rand(-100, 600)
+//     this.y = y || -20 * Math.random()
+//     this.a = 0.02
+//     this.vx = vx || 10 * Math.random()
+//     this.vy = vy || 10 * Math.random()
+//     this.r = r
+//   }
+//   move(){
+//     this.vy += this.a
+//     this.x += this.vx
+//     this.r *= 0.992
+//     this.y += this.vy
+//     if(this.x < 0) this.x = 900
+//     if(this.y > 600) {
+//       stars.forEach((star,i) => {
+//         if(star === this){
+//           stars.splice(i,1)
+//           stars.push(new Star())
+//         }
+//       })
+//     }
+//   }
+//   draw(){
+//     let {x, y} = this
+//     ctx.beginPath()
+//     var grad=ctx.createRadialGradient(x,y,1,x,y,18)
+//     grad.addColorStop(0,"rgb(193,255,255)")
+//     grad.addColorStop(1,"rgb(1,1,1)")
+//     ctx.fillStyle = grad
+//     ctx.arc(x,y,this.r,0,2*Math.PI)
+//     ctx.fill()
+//     ctx.closePath()
+
+//   }
+// }
+// function initStars(){
+//   for (let i = 0; i < 100; i++) {
+    
+//     stars.push(new Star(Math.floor(rand(0, 800)), Math.floor(rand(0, 100)), rand(-3, 3), rand(1, 2)))
+//   }
+// }
+// function rand(min, max){
+//   return min + Math.random() * (max - min)
+// }
+// function draw() {
+//   for(let star of stars){
+//     star.draw()
+//     star.move()
+//   }
+//   // 这里在不断加半透明蒙层，使上一帧的流星变淡
+//   ctx.fillStyle = 'rgba(0,0,0,0.05)'
+//   ctx.rect(0,0,800,600)
+//   ctx.fill()
+//   requestAnimationFrame(draw)
+// }
+// function main(){
+//   ctx.fillRect(0,0,800,600)
+//   initStars()
+//   draw()
+// }
+
+// main()
 })();
 
