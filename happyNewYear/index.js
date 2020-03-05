@@ -1,5 +1,6 @@
 (function(){
 
+
   // 为不同浏览器打上补丁
   (function() {
     var lastTime = 0;
@@ -138,9 +139,12 @@
     //初始化画布
     initCanvas();
 
-
+    // TODO:图片跨域不能getdata
+    let img = new Image();
+    img.src = "http://122.51.78.217/assets/img/test.png";
+    console.log(img);
     //获取数据
-    data = getPaticleData(text);
+    data = getPaticleData(text,img);
     newParticles = calculate(data,new_x,new_y);
     // for(let i = 0; i < newParticles.length; i ++){
     //   newParticles[i].draw();
@@ -198,7 +202,7 @@
     //开启第三段动画
     setTimeout(function(){
       t = 0;
-      data = getPaticleData("万事如意");
+      data = getPaticleData("万事如意",img);
       newParticles = [];
       newParticles = calculate(data,new_x,new_y);
       for(let i = 0; i < newParticles.length; i ++){
@@ -275,7 +279,7 @@
     //开启第三段动画
     setTimeout(function(){
       t = 0;
-      data = getPaticleData("头发多多");
+      data = getPaticleData("头发多多",img);
       newParticles = [];
       newParticles = calculate(data,new_x,new_y);
       for(let i = 0; i < newParticles.length; i ++){
@@ -351,7 +355,7 @@
     //开启第三段动画
     setTimeout(function(){
       t = 0;
-      data = getPaticleData("bug少少");
+      data = getPaticleData("bug少少",img);
       newParticles = [];
       newParticles = calculate(data,new_x,new_y);
       for(let i = 0; i < newParticles.length; i ++){
