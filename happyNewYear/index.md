@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+PE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,6 +22,4 @@
     <script src="../public/index.js"></script>
     <script src="../public/tween.js"></script>
     <script src="../public/canvas.js"></script>
-    <script src="index.js"></script>
-</body>
-</html>
+    <script src="index.js">

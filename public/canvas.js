@@ -91,12 +91,12 @@ function getPaticleData(text, img) {
   ctx.font = "70px Microsoft Yahei";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  //绘制模板图案
-  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-  // //使用特定函数来绘制模板图案
-  // ctx.translate(W/2,H/2);
-  // drawHeart(10,300);
-  // ctx.translate(-W/2,-H/2)
+  // //绘制模板图案
+  // ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+  //使用特定函数来绘制模板图案
+  ctx.translate(W/2,H/2);
+  drawHeart(10,300);
+  ctx.translate(-W/2,-H/2)
   // // 用图片来绘制模板图案
   // ctx.drawImage(img,W/2-img.width/2,H/2-img.height/2);
 

@@ -156,7 +156,7 @@
       particle.setXY(old_x,old_y);
       particle.current_x = old_x;
       particle.current_y = old_y;
-      particle.setWH(2,2);
+      particle.setWH(3,3);
       // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
   
       particle.delay = Math.random()*50;
@@ -179,7 +179,7 @@
         // particle.setColor("#ffffff");
         particle.setColor("#E74c3c");
         let size = getRandomColor
-        particle.setWH(2,2);
+        particle.setWH(3,3);
         //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
         //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
         // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
@@ -208,7 +208,7 @@
       for(let i = 0; i < newParticles.length; i ++){
         // particle.setColor(color);
         // particle.setXY(old_x,old_y);
-        // particle.setWH(2,2);
+        // particle.setWH(3,3);
         // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
         
         // particle.delay = Math.random()*60;
@@ -225,7 +225,7 @@
           particle.setXY(x,y);
           particle.current_x = x;
           particle.current_y = y;
-          particle.setWH(2,2);
+          particle.setWH(3,3);
           // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
       
           particle.delay = Math.random()*60;
@@ -256,7 +256,7 @@
       for(let i = 0; i < oldParticles.length; i ++){
         let particle = new Particle();
         particle.setColor("#E74c3c");
-        particle.setWH(2,2);
+        particle.setWH(3,3);
         //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
         //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
         // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
@@ -285,7 +285,7 @@
       for(let i = 0; i < newParticles.length; i ++){
         // particle.setColor(color);
         // particle.setXY(old_x,old_y);
-        // particle.setWH(2,2);
+        // particle.setWH(3,3);
         // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
         
         // particle.delay = Math.random()*60;
@@ -302,7 +302,7 @@
           particle.setXY(x,y);
           particle.current_x = x;
           particle.current_y = y;
-          particle.setWH(2,2);
+          particle.setWH(3,3);
           // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
       
           particle.delay = Math.random()*60;
@@ -332,7 +332,7 @@
       for(let i = 0; i < oldParticles.length; i ++){
         let particle = new Particle();
         particle.setColor("#E74c3c");
-        particle.setWH(2,2);
+        particle.setWH(3,3);
         //左侧区域: W/10*2~W/10*3,H/10*2~H/10*3
         //右侧区域：W/10*7~W/10*8,H/10*2~H/10*3
         // var x = Math.random()>0.5 ? W/10*1+Math.random()*W/10*2 : W/10*7+Math.random()*W/10*2;
@@ -361,7 +361,7 @@
       for(let i = 0; i < newParticles.length; i ++){
         // particle.setColor(color);
         // particle.setXY(old_x,old_y);
-        // particle.setWH(2,2);
+        // particle.setWH(3,3);
         // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
         
         // particle.delay = Math.random()*60;
@@ -378,7 +378,7 @@
           particle.setXY(x,y);
           particle.current_x = x;
           particle.current_y = y;
-          particle.setWH(2,2);
+          particle.setWH(3,3);
           // particle.delay = Math.abs(Math.pow(i,0.5)-Math.pow(newParticles.length,0.5))*Math.random();
       
           particle.delay = Math.random()*60;
