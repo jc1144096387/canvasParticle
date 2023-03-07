@@ -1,14 +1,14 @@
 (function () {
-
-
   // 为不同浏览器打上补丁
   (function () {
     var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
+    var vendors = ["webkit", "moz"];
     for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-      window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-      window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // Webkit中此取消方法的名字变了
-        window[vendors[x] + 'CancelRequestAnimationFrame'];
+      window.requestAnimationFrame =
+        window[vendors[x] + "RequestAnimationFrame"];
+      window.cancelAnimationFrame =
+        window[vendors[x] + "CancelAnimationFrame"] || // Webkit中此取消方法的名字变了
+        window[vendors[x] + "CancelRequestAnimationFrame"];
     }
 
     if (!window.requestAnimationFrame) {
@@ -27,31 +27,14 @@
         clearTimeout(id);
       };
     }
-  }());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  })();
 
   //粒子动画
-  var t = 0;//当前时间
-  var d = 200;//持续时间
+  var t = 0; //当前时间
+  var d = 200; //持续时间
   var timer;
   //animate动画函数
   function particle_animate(oldParticles, offset_x, offset_y, animate) {
-
     // for(let i = 0; i < oldParticles.length; i ++){
     //   var n = 100 + Math.random()*500;
     //   offset_x[i] = (newParticles[i].x - oldParticles[i].x)/n*speed;
@@ -59,7 +42,6 @@
     //   flag[i] = 0;
     // }
     //粒子动画,n为到达目标地点的移动次数
-
 
     ctx.clearRect(0, 0, W, H);
 
@@ -75,12 +57,25 @@
       // }
 
       if (t == 0) {
-        oldParticles[i].setXY(oldParticles[i].current_x, oldParticles[i].current_y);
+        oldParticles[i].setXY(
+          oldParticles[i].current_x,
+          oldParticles[i].current_y
+        );
       }
 
       if (t >= oldParticles[i].delay) {
-        var x = animate(t - oldParticles[i].delay, oldParticles[i].x, offset_x[i], d - oldParticles[i].delay);
-        var y = animate(t - oldParticles[i].delay, oldParticles[i].y, offset_y[i], d - oldParticles[i].delay);
+        var x = animate(
+          t - oldParticles[i].delay,
+          oldParticles[i].x,
+          offset_x[i],
+          d - oldParticles[i].delay
+        );
+        var y = animate(
+          t - oldParticles[i].delay,
+          oldParticles[i].y,
+          offset_y[i],
+          d - oldParticles[i].delay
+        );
 
         // oldParticles[i].setXY(x,y);
         oldParticles[i].drawTarget(x, y);
@@ -91,16 +86,13 @@
       // if(t == d){
       //   //动画结束时，修改粒子的坐标为结束坐标
       //   oldParticles[i].setXY(x,y);
-      // }  
+      // }
     }
-
 
     // if (t == d) {
     //   console.timeEnd('begin');
     //   console.timeEnd('two');
     //   cancelAnimationFrame(timer);
-
-
 
     //   return;
     // }
@@ -108,26 +100,31 @@
     t++;
     timer = requestAnimationFrame(function () {
       particle_animate(oldParticles, offset_x, offset_y, animate);
-    })
+    });
   }
 
   //animation动画
-  var animation = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (i) {
-    window.setTimeout(i, 1000 / 45)
-  };//各个浏览器支持的requestAnimationFrame有所不同，兼容各个浏览器
-
+  var animation =
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (i) {
+      window.setTimeout(i, 1000 / 45);
+    }; //各个浏览器支持的requestAnimationFrame有所不同，兼容各个浏览器
 
   //初始化变量
   var old_x = old_x || W / 2;
-  var old_y = old_y || H / 5 * 4;
+  var old_y = old_y || (H / 5) * 4;
   var new_x = new_x || W / 2;
-  var new_y = new_y || H / 5 * 2;
+  var new_y = new_y || (H / 5) * 2;
   var color = color || "#ffffff";
   var text = text || "女生节快乐";
   var animate;
   //中间变量和存储变量
   var particles = [];
-  var oldParticles = [];//存放粒子实例
+  var oldParticles = []; //存放粒子实例
   var newParticles = [];
   var data = [];
   // var timer;
@@ -135,9 +132,15 @@
   var offset_y = [];
 
   //animation动画
-  var animation = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (i) {
-    window.setTimeout(i, 1000 / 45)
-  };//各个浏览器支持的requestAnimationFrame有所不同，兼容各个浏览器
+  var animation =
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (i) {
+      window.setTimeout(i, 1000 / 45);
+    }; //各个浏览器支持的requestAnimationFrame有所不同，兼容各个浏览器
 
   //初始化画布
   initCanvas();
@@ -176,11 +179,10 @@
 
   // 从某一点喷射粒子形成图案
   function particleMove(x, y) {
-
     // TODO:图片跨域不能getdata
     let img = new Image();
-    img.src = "http://122.51.78.217/assets/img/test.png";
-    console.log(img);
+    // img.src = "http://122.51.78.217/assets/img/test.png";
+    // console.log(img);
     //获取数据
     let data = getPaticleData(text, img);
     let newParticles = calculate(data, new_x, new_y);
@@ -193,7 +195,7 @@
       let particle = new Circle();
       particle.setColor(color);
       // let x = old_x + (Math.random()-0.5)*500;
-      let x = old_x - 140 + Math.floor(i/newParticles.length*5)*70;
+      let x = old_x - 140 + Math.floor((i / newParticles.length) * 5) * 70;
       particle.setXY(x, old_y);
       particle.current_x = x;
       particle.current_y = old_y;
@@ -209,30 +211,27 @@
     }
     let animate = Expo.easeOut;
     requestAnimationFrame(function () {
-      console.time('begin');
+      console.time("begin");
       particle_animate(oldParticles, offset_x, offset_y, animate);
     });
   }
 
   particleMove(old_x, old_y);
 
-
   ctx.strokeStyle = "red";
   ctx.shadowBlur = 25;
   ctx.shadowColor = "hsla(0, 100%, 60%,0.5)";
-  
-  var precision = 80;//密度
+
+  var precision = 80; //密度
   var hearts = [];
   var mouseMoved = false;
-  
-  
-  function onMove(e){
+
+  function onMove(e) {
     mouseMoved = true;
-    if(e.type === "touchmove"){
+    if (e.type === "touchmove") {
       hearts.push(new Heart(e.touches[0].clientX, e.touches[0].clientY));
       hearts.push(new Heart(e.touches[0].clientX, e.touches[0].clientY));
-    }
-    else{
+    } else {
       hearts.push(new Heart(e.clientX, e.clientY));
       hearts.push(new Heart(e.clientX, e.clientY));
     }
@@ -240,34 +239,38 @@
   window.addEventListener("mousemove", onMove);
   window.addEventListener("touchmove", onMove);
 
-  var Heart = function(x,y){
-    this.x = x || Math.random()*W;
-    this.y = y || Math.random()*W;
-    this.size = Math.random()*2 + 1;
+  var Heart = function (x, y) {
+    this.x = x || Math.random() * W;
+    this.y = y || Math.random() * W;
+    this.size = Math.random() * 2 + 1;
     this.shadowBlur = Math.random() * 10;
-    this.speedX = (Math.random()+0.2-0.6) * 8;
-    this.speedY = (Math.random()+0.2-0.6) * 8;
-    this.speedSize = Math.random()*0.05 + 0.03;
+    this.speedX = (Math.random() + 0.2 - 0.6) * 8;
+    this.speedY = (Math.random() + 0.2 - 0.6) * 8;
+    this.speedSize = Math.random() * 0.05 + 0.03;
     this.opacity = 1;
-  
-  
+
     this.vertices = [];
     for (var i = 0; i < precision; i++) {
       var step = (i / precision - 0.5) * (Math.PI * 2);
       var vector = {
-        x : (15 * Math.pow(Math.sin(step), 3)),
-        y : -(13 * Math.cos(step) - 5 * Math.cos(2 * step) - 2 * Math.cos(3 * step) - Math.cos(4 * step))
-      }
+        x: 15 * Math.pow(Math.sin(step), 3),
+        y: -(
+          13 * Math.cos(step) -
+          5 * Math.cos(2 * step) -
+          2 * Math.cos(3 * step) -
+          Math.cos(4 * step)
+        ),
+      };
       this.vertices.push(vector);
     }
-  }
-  
-  Heart.prototype.draw = function(){
+  };
+
+  Heart.prototype.draw = function () {
     this.size -= this.speedSize;
     this.x += this.speedX;
     this.y += this.speedY;
     ctx.save();
-    ctx.translate(-1000,this.y);
+    ctx.translate(-1000, this.y);
     ctx.scale(this.size, this.size);
     ctx.beginPath();
     for (var i = 0; i < precision; i++) {
@@ -278,33 +281,27 @@
     ctx.shadowBlur = Math.round((3 - this.size) * 10);
     ctx.shadowColor = "hsla(0, 100%, 60%,0.5)";
     ctx.shadowOffsetX = this.x + 1000;
-    ctx.globalCompositeOperation = "screen"
+    ctx.globalCompositeOperation = "screen";
     ctx.closePath();
-    ctx.fill()
+    ctx.fill();
     ctx.restore();
   };
-  
-  
-  function render(a){
+
+  function render(a) {
     // requestAnimationFrame(render);
-  
-    if(hearts.length < a){
-      hearts.push(new Heart())
+
+    if (hearts.length < a) {
+      hearts.push(new Heart());
     }
     // ctx.clearRect(0,0,ww,wh);
     for (var i = 0; i < hearts.length; i++) {
       hearts[i].draw();
-      if(hearts[i].size <= 0){
-        hearts.splice(i,1);
+      if (hearts[i].size <= 0) {
+        hearts.splice(i, 1);
         i--;
       }
     }
   }
-
-
-
-
-
 
   //根据粒子数组绘制图案
   function draw(particles) {
@@ -331,12 +328,11 @@
     randomParticles.forEach(function (i) {
       i.x = canvas.width * Math.random();
       i.y = canvas.height * Math.random();
-    })
+    });
   }
 
   function move(randomParticles, targetParticles) {
-
-    let t = 10;//移动次数
+    let t = 10; //移动次数
     for (let i = 0; i < randomParticles.length; i++) {
       let x_distance = targetParticles[i].x - randomParticles[i].x;
       let y_distance = targetParticles[i].y - randomParticles[i].y;
@@ -355,6 +351,4 @@
     //     move(randomParticles,targetParticles);
     // },100);
   }
-
-
-})()
+})();
